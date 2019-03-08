@@ -12,7 +12,7 @@ Small utility script to display TR4 system information on a 2.42" SSD1309 OLED
 1. Instal natve dependencies as follows:
 
 ```
-sudo apt install libusb-1.0
+sudo apt install libusb-1.0 libftdi1-2
 ```
 
 2. Create a _udev_ configuration file to allow user-space processes to access
@@ -39,4 +39,5 @@ sudo adduser $USER plugdev
 ## References
 * https://github.com/rm-hull/luma.oled/pull/231
 * https://github.com/rm-hull/luma.oled/issues/185
+* https://github.com/eblot/pyftdi/issues/38#issuecomment-267062576
 
