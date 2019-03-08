@@ -10,6 +10,7 @@ pylint = "*"
 
 [packages]
 luma.core = "*"
+luma.oled = "*"
 pyftdi = "*"
 
 [requires]
