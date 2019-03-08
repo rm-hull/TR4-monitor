@@ -34,6 +34,17 @@ SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6015", GROUP="plugde
 sudo adduser $USER plugdev
 ```
 
+## Pin-outs
+
+| OLED Pin | OLED Name | FT232 Pin | FT232 Function | Remarks |
+|----------|----------|---------|----------|-------|
+| 1 | GND | GND | GND | Ground |
+| 2 | VCC | +5V | 5V0 | +5.0V Power |
+| 3 | SCL | AD0 | SCLK | Serial Clock |
+| 4 | SDA | AD1 | MOSI | Serial Data |
+| 5 | RES | AD4 | GPIO 4 | Reset |
+| 6 | DC | AD5 | GPIO 5 | Data/Command |
+| 7 | CS | AD3 | CE0 | Chip Select |
 
 
 ## References
