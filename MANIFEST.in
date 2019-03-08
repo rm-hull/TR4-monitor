@@ -1,0 +1,13 @@
+include README.md LICENSE.md setup.cfg
+
+recursive-include tr4_monitor *.py
+
+recursive-include examples *
+
+recursive-include doc *
+prune docs/_build
+
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude * *~
+recursive-exclude * .coverage

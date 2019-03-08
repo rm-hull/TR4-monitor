@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+pylint = "*"
+"autopep8" = "*"
+"luma.emulator" = "*"
+
+[packages]
+luma.core = "*"
+pyftdi = "*"
+
+[requires]
+python_version = "3.6"
