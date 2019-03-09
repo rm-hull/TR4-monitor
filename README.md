@@ -42,6 +42,12 @@ SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6015", GROUP="plugde
 sudo adduser $USER plugdev
 ```
 
+4. Update _/etc/modules_ to auto-load the `it87` kernel module:
+
+```
+echo "it87" | grep sudo tee -a /etc/modules
+```
+
 ## Pin-outs
 
 | OLED Pin | OLED Name | FT232 Pin | FT232 Function | Remarks |
