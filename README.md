@@ -7,6 +7,7 @@ Small utility script to display TR4 system information on a 2.42" SSD1309 OLED
 * Python 3
 * [Luma.OLED](https://luma-oled.readthedocs.io/en/latest/)
 * [PySensors](https://pypi.org/project/PySensors/)
+* [PyFTDI](http://eblot.github.io/pyftdi)
 
 ### Hardware
 * [2.42" OLED display](https://www.aliexpress.com/item/2-42-inch-LCD-Screen-12864-OLED-Display-Module-IIC-I2C-SPI-Serial-C51-STM32-SSD1309/32857123469.html)
