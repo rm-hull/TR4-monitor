@@ -60,3 +60,4 @@ sudo adduser $USER plugdev
 * https://github.com/rm-hull/luma.oled/issues/185
 * https://github.com/eblot/pyftdi/issues/38#issuecomment-267062576
 * http://eblot.github.io/pyftdi/pinout.html
+* https://developer.amd.com/resources/developer-guides-manuals/
