@@ -12,6 +12,7 @@ pylint = "*"
 luma.core = "*"
 luma.oled = "*"
 pyftdi = "*"
+psutil = "*"
 
 [requires]
 python_version = "3.6"
