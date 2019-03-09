@@ -7,10 +7,10 @@ name = "pypi"
 pylint = "*"
 "autopep8" = "*"
 "luma.emulator" = "*"
+pygame = "*"
 
 [packages]
-luma.core = "*"
-luma.oled = "*"
+"luma.oled" = "*"
 pyftdi = "*"
 psutil = "*"
 
