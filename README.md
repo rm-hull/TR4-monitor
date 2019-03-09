@@ -39,10 +39,10 @@ sudo adduser $USER plugdev
 | OLED Pin | OLED Name | FT232 Pin | FT232 Function | Remarks |
 |----------|----------|---------|----------|-------|
 | 1 | GND | GND | GND | Ground |
-| 2 | VCC | +5V | 5V0 | +5.0V Power |
+| 2 | VCC | +3.3V | 3V3 | +3.3V Power |
 | 3 | SCL | AD0 | SCLK | Serial Clock |
 | 4 | SDA | AD1 | MOSI | Serial Data |
-| 5 | RES | AD4 | GPIO 4 | Reset |
+| 5 | RES | AD6 | GPIO 6 | Reset |
 | 6 | DC | AD5 | GPIO 5 | Data/Command |
 | 7 | CS | AD3 | CE0 | Chip Select |
 
