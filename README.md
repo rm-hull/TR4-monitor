@@ -78,7 +78,7 @@ pipenv run python tr4_monitor/main.py --emulator=pygame
 * ~~Don't hardcode linux release version~~
 * ~~Use framerate regulator~~
 * Add sensors data
-* Allow flags to be passed in via config file
+* ~~Allow flags to be passed in via config file~~
 * Add photos & gifanimation
 * Create docs/index.html & link to home page
 

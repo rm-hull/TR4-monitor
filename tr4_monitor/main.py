@@ -3,57 +3,19 @@
 # See LICENSE.rst for details.
 
 import os
+import sys
 import platform
-import argparse
 import time
 
 from luma.core.sprite_system import framerate_regulator
-from luma.core.cmdline import get_choices, get_transformer_choices
 from luma.core.virtual import viewport, snapshot
+from luma.core.cmdline import load_config
 from luma.core.render import canvas
 from PIL import Image
 
+from cmdline import create_parser
 from fonts import chicago, proggy_tiny
 from common import center_text
-
-
-def create_parser():
-    emulator_choices = sorted(get_choices('luma.emulator.device'))
-    rotation_choices = [0, 1, 2, 3]
-    transformer_choices = get_transformer_choices()
-
-    parser = argparse.ArgumentParser(description='TR4 system monitor',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-
-    parser.add_argument('--emulator', '-e',
-        type=str,
-        dest='emulator',
-        default=None,
-        help=f'Use specific luma.emulator device, one of: {", ".join(emulator_choices)}',
-        choices=emulator_choices,
-        metavar='DISPLAY')
-
-    parser.add_argument('--rotate', '-r',
-        type=int,
-        default=0,
-        help='Rotation factor. Allowed values are: {0}'.format(', '.join([str(x) for x in rotation_choices])),
-        choices=rotation_choices,
-        metavar='ROTATION')
-
-    emulator_group = parser.add_argument_group('Emulator')
-    emulator_group.add_argument('--transform', type=str, default='scale2x', help='Scaling transform to apply (emulator only). Allowed values are: {0}'.format(', '.join(transformer_choices)), choices=transformer_choices, metavar='TRANSFORM')
-    emulator_group.add_argument('--scale', type=int, default=2, help='Scaling factor to apply (emulator only)')
-    emulator_group.add_argument('--duration', type=float, default=0.01, help='Animation frame duration (gifanim emulator only)')
-    emulator_group.add_argument('--loop', type=int, default=0, help='Repeat loop, zero=forever (gifanim emulator only)')
-    emulator_group.add_argument('--max-frames', type=int, help='Maximum frames to record (gifanim emulator only)')
-
-    try:  # pragma: no cover
-        import argcomplete
-        argcomplete.autocomplete(parser)
-    except ImportError:
-        pass
-
-    return parser
 
 
 def position(max):
@@ -105,18 +67,30 @@ def hw_monitor(device):
             virtual.set_position((0, y))
 
 
-def main():
-    args = create_parser().parse_args()
+def get_device(actual_args=None):
+    if actual_args is None:
+        actual_args = sys.argv[1:]
+    parser = create_parser()
+    args = parser.parse_args(actual_args)
+
+    if args.config:
+        # load config from file
+        config = load_config(args.config)
+        args = parser.parse_args(config + actual_args)
+
     if args.emulator:
         import luma.emulator.device
         Device = getattr(luma.emulator.device, args.emulator)
-        device = Device(mode='1', **vars(args))
+        return Device(mode='1', **vars(args))
     else:
         from luma.oled.device import ssd1309
         from ftdi import get_luma_compatible_serial_interface
         serial = get_luma_compatible_serial_interface()
-        device = ssd1309(serial, **vars(args))
+        return ssd1309(serial, **vars(args))
 
+
+def main():
+    device = get_device()
     hw_monitor(device)
 
 
