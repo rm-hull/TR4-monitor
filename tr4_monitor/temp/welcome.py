@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Copyright (c) 2014-18 Richard Hull and contributors
 # See LICENSE.rst for details.
@@ -16,7 +15,7 @@ from luma.core.virtual import viewport, snapshot, range_overlap
 from luma.core.sprite_system import framerate_regulator
 from luma.oled.device import ssd1309
 
-from ftdi import get_luma_compatible_serial_interface
+from tr4_monitor.ftdi import get_luma_compatible_serial_interface
 
 welcome = [
     u"Бзиала шәаабеит",
