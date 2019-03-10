@@ -3,6 +3,7 @@
 # See LICENSE.rst for details.
 
 import os
+import platform
 import argparse
 import time
 
@@ -86,7 +87,7 @@ def hw_monitor(device):
     with canvas(virtual) as draw:
         draw.bitmap((0, 0), logo, fill='white')
         center_text(draw, device.width, 40, 'Threadripper 1950x', font=chicago, fill='white')
-        center_text(draw, device.width, 54, '4.18.0-16-generic', font=proggy_tiny, fill='white')
+        center_text(draw, device.width, 54, platform.release(), font=proggy_tiny, fill='white')
 
     time.sleep(5.0)
 

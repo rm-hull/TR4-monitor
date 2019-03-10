@@ -1,5 +1,5 @@
 # TR4 Monitor
-Small utility script to display TR4 system information on a 2.42" SSD1309 OLED, 
+Small utility script to display TR4 system information on a 2.42" SSD1309 OLED,
 connected to a USB port via an FT232H adapter.
 
 ![Block diagram](http://www.destructuring-bind.org/TR4-monitor/block_diagram.svg)
@@ -42,7 +42,7 @@ SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6015", GROUP="plugde
 sudo adduser $USER plugdev
 ```
 
-4. Load the `it87` kernel module, and update _/etc/modules_ to auto-load the 
+4. Load the `it87` kernel module, and update _/etc/modules_ to auto-load the
    module on startup:
 ```
 sudo modprobe it87
@@ -75,7 +75,7 @@ pipenv run python tr4_monitor/main.py --emulator=pygame
 ## TODO
 * Allow network interface to be specified as cmd-line argument
 * Allow subheader to be specified as cmd-line argument
-* Don't hardcode linux release version
+* ~~Don't hardcode linux release version~~
 * Use framerate regulator
 * Add sensors data
 * Allow flags to be passed in via config file
