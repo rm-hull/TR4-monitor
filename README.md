@@ -66,6 +66,9 @@ connected to a USB port via an FT232H adapter.
 | 6 | DC | AD5 | GPIO 5 | Data/Command |
 | 7 | CS | AD3 | CE0 | Chip Select |
 
+## TODO
+* Allow network interface to be specified as cmd-line argument
+* Allow subheader to be specified as cmd-line argument
 
 ## References
 * https://github.com/rm-hull/luma.oled/pull/231
