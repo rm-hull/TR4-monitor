@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3324174bc533b2de8fda33b2a07540fb555d3f404e97355c586e98501861b06b"
+            "sha256": "31a24de871a6352c8eff049e87ec8045c0c5700ea702c7aeec8b04bac6e3a21d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -37,6 +37,13 @@
             ],
             "index": "pypi",
             "version": "==3.1.0"
+        },
+        "miniupnpc": {
+            "hashes": [
+                "sha256:7ea46c93486fe1bdb31f0e0c2d911d224fce70bf5ea120e4295d647dfe274931"
+            ],
+            "index": "pypi",
+            "version": "==2.0.2"
         },
         "pillow": {
             "hashes": [

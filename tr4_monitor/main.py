@@ -42,7 +42,7 @@ def pause_every(interval, stop_for, generator):
 
 
 def hw_monitor(device):
-    from hotspot import cpu_percent, uptime, system_load, network, memory, disk
+    from hotspot import cpu_percent, uptime, system_load, network, memory, disk, ip_addrs
     img_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'images', 'amd-ryzen-logo.png'))
     logo = Image.open(img_path)
 
@@ -52,8 +52,6 @@ def hw_monitor(device):
         center_text(draw, device.width, 40, 'Threadripper 1950x', font=chicago, fill='white')
         center_text(draw, device.width, 54, platform.release(), font=proggy_tiny, fill='white')
 
-    time.sleep(5.0)
-
     offset = 76
     virtual.add_hotspot(snapshot(device.width, 12, cpu_percent.render, interval=0.5), (0, offset))
     virtual.add_hotspot(snapshot(device.width, 12, system_load.render, interval=1.0), (0, offset + 12))
@@ -61,7 +59,9 @@ def hw_monitor(device):
     virtual.add_hotspot(snapshot(device.width, 12, memory.render, interval=5.0), (0, offset + 36))
     virtual.add_hotspot(snapshot(device.width, 12, disk.directory('/'), interval=5.0), (0, offset + 48))
     virtual.add_hotspot(snapshot(device.width, 12, network.interface('wlp2s0'), interval=2.0), (0, offset + 60))
+    virtual.add_hotspot(snapshot(device.width, 24, ip_addrs.discover(), interval=1000), (0, offset + 72))
 
+    time.sleep(5.0)
     for y in pause_every(12, 40, position(128)):
         with framerate_regulator():
             virtual.set_position((0, y))

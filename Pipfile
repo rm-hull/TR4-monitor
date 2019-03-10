@@ -16,6 +16,7 @@ pyftdi = "*"
 psutil = "*"
 pysensors3 = "*"
 humanize = "*"
+miniupnpc = "*"
 
 [requires]
 python_version = "3.6"
