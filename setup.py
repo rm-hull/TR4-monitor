@@ -2,7 +2,7 @@
 
 from setuptools import setup
 
-import beebeelog
+import tr4_monitor
 
 setup(name='TR4-Monitor',
       version=tr4_monitor.__version__,
