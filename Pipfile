@@ -4,16 +4,18 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
-pylint = "*"
 "autopep8" = "*"
 "luma.emulator" = "*"
 pygame = "*"
+rope = "*"
+flake8 = "*"
 
 [packages]
 "luma.oled" = "*"
 pyftdi = "*"
 psutil = "*"
 pysensors3 = "*"
+humanize = "*"
 
 [requires]
 python_version = "3.6"
