@@ -93,7 +93,7 @@ def hw_monitor(device):
     offset = 76
     virtual.add_hotspot(snapshot(device.width, 12, cpu_percent.render, interval=0.5), (0, offset))
     virtual.add_hotspot(snapshot(device.width, 12, system_load.render, interval=1.0), (0, offset + 12))
-    virtual.add_hotspot(snapshot(device.width, 12, uptime.render, interval=1.0), (0, offset + 24))
+    virtual.add_hotspot(snapshot(device.width, 12, uptime.render, interval=0.1), (0, offset + 24))
     virtual.add_hotspot(snapshot(device.width, 12, memory.render, interval=5.0), (0, offset + 36))
     virtual.add_hotspot(snapshot(device.width, 12, disk.directory('/'), interval=5.0), (0, offset + 48))
     virtual.add_hotspot(snapshot(device.width, 12, network.interface('wlp2s0'), interval=2.0), (0, offset + 60))
