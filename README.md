@@ -69,6 +69,11 @@ connected to a USB port via an FT232H adapter.
 ## TODO
 * Allow network interface to be specified as cmd-line argument
 * Allow subheader to be specified as cmd-line argument
+* Don't hardcode linux release version
+* Add sensors data
+* Allow flags to be passed in via config file
+* Add photos & gifanimation
+* Create docs/index.html & link to home page
 
 ## References
 * https://github.com/rm-hull/luma.oled/pull/231
