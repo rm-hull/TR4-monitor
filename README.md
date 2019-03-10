@@ -21,38 +21,44 @@ connected to a USB port via an FT232H adapter.
 ## Installation
 
 1. Install native dependencies as follows:
-
-    sudo apt install libusb-1.0
+```
+sudo apt install libusb-1.0
+```
 
 2. Create a _udev_ configuration file to allow user-space processes to access
    the FTDI device. Typically, create a file, _/etc/udev/rules.d/11-ftdi.rules_:
+```
+# /etc/udev/rules.d/11-ftdi.rules
+SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6001", GROUP="plugdev", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6011", GROUP="plugdev", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6010", GROUP="plugdev", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6014", GROUP="plugdev", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6015", GROUP="plugdev", MODE="0666"
+```
 
-    # /etc/udev/rules.d/11-ftdi.rules
-    SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6001", GROUP="plugdev", MODE="0666"
-    SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6011", GROUP="plugdev", MODE="0666"
-    SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6010", GROUP="plugdev", MODE="0666"
-    SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6014", GROUP="plugdev", MODE="0666"
-    SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6015", GROUP="plugdev", MODE="0666"
-    
 3. Add your user to the _plugdev_ group (log out and back in again to get the
    command to be effective):
-
-    sudo adduser $USER plugdev
+```
+sudo adduser $USER plugdev
+```
 
 4. Load the `it87` kernel module, and update _/etc/modules_ to auto-load the 
    module on startup:
-
-    sudo modprobe it87
-    echo "it87" | grep sudo tee -a /etc/modules
+```
+sudo modprobe it87
+echo "it87" | grep sudo tee -a /etc/modules
+```
 
 5. Ensure you have [pipenv](https://pipenv.readthedocs.io/en/latest/) installed,
    and then initialize the environment:
-
-    pipenv install -d
+```
+pipenv install -d
+```
 
 6. Run the monitor using the pygame emulator (use `-h` to see all flags):
- 
-    pipenv run python tr4_monitor/main.py --emulator=pygame
+```
+pipenv run python tr4_monitor/main.py --emulator=pygame
+```
 
 ## Pin-outs
 
