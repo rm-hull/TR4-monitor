@@ -2,7 +2,7 @@
 Small utility script to display TR4 system information on a 2.42" SSD1309 OLED, 
 connected to a USB port via an FT232H adapter.
 
-![Block diagram](https://rawgithub.com/rm-hull/TR4-monitor/master/docs/block_diagram.svg)
+![Block diagram](http://www.destructuring-bind.org/TR4-monitor/block_diagram.svg)
 
 ## Bill of materials
 
