@@ -55,9 +55,9 @@ echo "it87" | grep sudo tee -a /etc/modules
 pipenv install -d
 ```
 
-6. Run the monitor using the pygame emulator (use `-h` to see all flags):
+6. Run the monitor using the pygame display emulator (use `-h` to see all flags):
 ```
-pipenv run python tr4_monitor/main.py --emulator=pygame
+pipenv run python tr4_monitor/main.py -f conf/pygame.conf
 ```
 
 ## Pin-outs
