@@ -7,6 +7,7 @@ import platform
 import argparse
 import time
 
+from luma.core.sprite_system import framerate_regulator
 from luma.core.cmdline import get_choices, get_transformer_choices
 from luma.core.virtual import viewport, snapshot
 from luma.core.render import canvas
@@ -100,8 +101,8 @@ def hw_monitor(device):
     virtual.add_hotspot(snapshot(device.width, 12, network.interface('wlp2s0'), interval=2.0), (0, offset + 60))
 
     for y in pause_every(12, 40, position(128)):
-        virtual.set_position((0, y))
-        time.sleep(0.05)
+        with framerate_regulator():
+            virtual.set_position((0, y))
 
 
 def main():
