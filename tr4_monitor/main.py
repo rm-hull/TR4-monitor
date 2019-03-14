@@ -41,7 +41,7 @@ def pause_every(interval, stop_for, generator):
         pass
 
 
-def hw_monitor(device):
+def hw_monitor(device, args):
     from hotspot import cpu_percent, uptime, system_load, network, memory, disk, ip_addrs
     img_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'images', 'amd-ryzen-logo.png'))
     logo = Image.open(img_path)
@@ -58,7 +58,7 @@ def hw_monitor(device):
     virtual.add_hotspot(snapshot(device.width, 12, uptime.render, interval=0.1), (0, offset + 24))
     virtual.add_hotspot(snapshot(device.width, 12, memory.render, interval=5.0), (0, offset + 36))
     virtual.add_hotspot(snapshot(device.width, 12, disk.directory('/'), interval=5.0), (0, offset + 48))
-    virtual.add_hotspot(snapshot(device.width, 12, network.interface('wlp2s0'), interval=2.0), (0, offset + 60))
+    virtual.add_hotspot(snapshot(device.width, 12, network.interface(args.network), interval=2.0), (0, offset + 60))
     virtual.add_hotspot(snapshot(device.width, 24, ip_addrs.discover(), interval=1000), (0, offset + 72))
 
     time.sleep(5.0)
@@ -67,17 +67,17 @@ def hw_monitor(device):
             virtual.set_position((0, y))
 
 
-def get_device(actual_args=None):
-    if actual_args is None:
-        actual_args = sys.argv[1:]
+def get_args():
+    actual_args = sys.argv[1:]
     parser = create_parser()
     args = parser.parse_args(actual_args)
-
     if args.config:
-        # load config from file
         config = load_config(args.config)
         args = parser.parse_args(config + actual_args)
+    return args
+    
 
+def get_device(args):
     if args.emulator:
         import luma.emulator.device
         Device = getattr(luma.emulator.device, args.emulator)
@@ -91,8 +91,9 @@ def get_device(actual_args=None):
 
 def main():
     try:
-        device = get_device()
-        hw_monitor(device)
+        args = get_args()
+        device = get_device(args)
+        hw_monitor(device, args)
     except KeyboardInterrupt:
         pass
 

@@ -73,7 +73,7 @@ pipenv run python tr4_monitor/main.py -f conf/pygame.conf
 | 7 | CS | AD3 | CE0 | Chip Select |
 
 ## TODO
-* Allow network interface to be specified as cmd-line argument
+* ~~Allow network interface to be specified as cmd-line argument~~
 * Allow subheader to be specified as cmd-line argument
 * ~~Don't hardcode linux release version~~
 * ~~Use framerate regulator~~

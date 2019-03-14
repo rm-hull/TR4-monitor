@@ -32,6 +32,12 @@ def create_parser():
         help='Rotation factor. Allowed values are: {0}'.format(', '.join([str(x) for x in rotation_choices])),
         choices=rotation_choices,
         metavar='ROTATION')
+        
+    parser.add_argument('--network', '-n',
+        type=str,
+        default='en0',
+        help='Network interface to report usage against.',
+        metavar='NETWORK')
 
     emulator_group = parser.add_argument_group('Emulator')
     emulator_group.add_argument('--transform', type=str, default='scale2x', help='Scaling transform to apply (emulator only). Allowed values are: {0}'.format(', '.join(transformer_choices)), choices=transformer_choices, metavar='TRANSFORM')
