@@ -32,7 +32,12 @@ def create_parser():
         help='Rotation factor. Allowed values are: {0}'.format(', '.join([str(x) for x in rotation_choices])),
         choices=rotation_choices,
         metavar='ROTATION')
-        
+    
+    parser.add_argument('--title', '-t',
+        type=str,
+        help='Show title instead of CPU name',
+        metavar='TITLE')
+          
     parser.add_argument('--network', '-n',
         type=str,
         default='en0',

@@ -74,7 +74,7 @@ pipenv run python tr4_monitor/main.py -f conf/pygame.conf
 
 ## TODO
 * ~~Allow network interface to be specified as cmd-line argument~~
-* Allow subheader to be specified as cmd-line argument
+* ~~Allow subheader to be specified as cmd-line argument~~
 * ~~Don't hardcode linux release version~~
 * ~~Use framerate regulator~~
 * Add sensors data

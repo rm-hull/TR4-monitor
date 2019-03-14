@@ -49,7 +49,7 @@ def hw_monitor(device, args):
     virtual = viewport(device, width=device.width, height=768)
     with canvas(virtual) as draw:
         draw.bitmap((0, 0), logo, fill='white')
-        center_text(draw, device.width, 40, 'Threadripper 1950x', font=chicago, fill='white')
+        center_text(draw, device.width, 40, args.title or 'Threadripper 1950x', font=chicago, fill='white')
         center_text(draw, device.width, 54, platform.release(), font=proggy_tiny, fill='white')
 
     offset = 76
