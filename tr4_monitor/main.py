@@ -90,8 +90,11 @@ def get_device(actual_args=None):
 
 
 def main():
-    device = get_device()
-    hw_monitor(device)
+    try:
+        device = get_device()
+        hw_monitor(device)
+    except KeyboardInterrupt:
+        pass
 
 
 if __name__ == '__main__':
