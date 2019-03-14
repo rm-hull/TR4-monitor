@@ -62,7 +62,7 @@ def hw_monitor(device, args):
     virtual.add_hotspot(snapshot(device.width, 24, ip_addrs.discover(), interval=1000), (0, offset + 72))
 
     time.sleep(5.0)
-    for y in pause_every(12, 40, position(128)):
+    for y in pause_every(12, 40, position(132)):
         with framerate_regulator():
             virtual.set_position((0, y))
 
