@@ -20,11 +20,7 @@ def discover():
     def render(draw, width, height):
         draw.text((0, 0), f'IP:', fill='white', font=proggy_tiny)
         right_text(draw, width, 0, text=local_ip_addr, font=proggy_tiny)
-        draw.text((0, 12), f'Ext. IP:', fill='white', font=proggy_tiny)
         right_text(draw, width, 12, text=ext_ip_addr, font=proggy_tiny)
 
     return render
 
-
-def height():
-    return 24
