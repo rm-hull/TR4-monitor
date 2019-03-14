@@ -78,7 +78,7 @@ def get_args():
 
 
 def get_device(args):
-    if args.emulator:
+    if 'emulator' in args and args.emulator:
         import luma.emulator.device
         Device = getattr(luma.emulator.device, args.emulator)
         return Device(mode='1', **vars(args))

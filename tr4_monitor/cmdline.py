@@ -4,13 +4,11 @@
 
 import argparse
 
-from luma.core.cmdline import get_choices, get_transformer_choices
+from luma.core.cmdline import get_choices, get_transformer_choices    
 
 
 def create_parser():
-    emulator_choices = sorted(get_choices('luma.emulator.device'))
     rotation_choices = [0, 1, 2, 3]
-    transformer_choices = get_transformer_choices()
 
     parser = argparse.ArgumentParser(description='TR4 system monitor',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -19,12 +17,6 @@ def create_parser():
         type=str,
         help='Load configuration settings from a file')
 
-    parser.add_argument('--emulator', '-e',
-        type=str,
-        default=None,
-        help=f'Use specific luma.emulator device (rather than a real display), one of: {", ".join(emulator_choices)}',
-        choices=emulator_choices,
-        metavar='DISPLAY')
 
     parser.add_argument('--rotate', '-r',
         type=int,
@@ -44,12 +36,23 @@ def create_parser():
         help='Network interface to report usage against.',
         metavar='NETWORK')
 
-    emulator_group = parser.add_argument_group('Emulator')
-    emulator_group.add_argument('--transform', type=str, default='scale2x', help='Scaling transform to apply (emulator only). Allowed values are: {0}'.format(', '.join(transformer_choices)), choices=transformer_choices, metavar='TRANSFORM')
-    emulator_group.add_argument('--scale', type=int, default=2, help='Scaling factor to apply (emulator only)')
-    emulator_group.add_argument('--duration', type=float, default=0.01, help='Animation frame duration (gifanim emulator only)')
-    emulator_group.add_argument('--loop', type=int, default=0, help='Repeat loop, zero=forever (gifanim emulator only)')
-    emulator_group.add_argument('--max-frames', type=int, help='Maximum frames to record (gifanim emulator only)')
+    emulator_choices = sorted(get_choices('luma.emulator.device'))
+    if emulator_choices:
+        transformer_choices = get_transformer_choices()
+
+        parser.add_argument('--emulator', '-e',
+            type=str,
+            default=None,
+            help=f'Use specific luma.emulator device (rather than a real display), one of: {", ".join(emulator_choices)}',
+            choices=emulator_choices,
+            metavar='DISPLAY')
+
+        emulator_group = parser.add_argument_group('Emulator')
+        emulator_group.add_argument('--transform', type=str, default='scale2x', help='Scaling transform to apply (emulator only). Allowed values are: {0}'.format(', '.join(transformer_choices)), choices=transformer_choices, metavar='TRANSFORM')
+        emulator_group.add_argument('--scale', type=int, default=2, help='Scaling factor to apply (emulator only)')
+        emulator_group.add_argument('--duration', type=float, default=0.01, help='Animation frame duration (gifanim emulator only)')
+        emulator_group.add_argument('--loop', type=int, default=0, help='Repeat loop, zero=forever (gifanim emulator only)')
+        emulator_group.add_argument('--max-frames', type=int, help='Maximum frames to record (gifanim emulator only)')
 
     try:  # pragma: no cover
         import argcomplete
