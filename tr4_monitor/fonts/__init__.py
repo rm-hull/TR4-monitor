@@ -15,3 +15,7 @@ def load_font(name, size):
 proggy_tiny = load_font('ProggyTiny.ttf', 16)
 chicago = load_font('ChiKareGo.ttf', 16)
 code2000 = load_font('code2000.ttf', 12)
+pixelmix = load_font('pixelmix.ttf', 8)
+
+default = pixelmix
+fixed = proggy_tiny

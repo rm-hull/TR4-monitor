@@ -14,7 +14,7 @@ from luma.core.render import canvas
 from PIL import Image
 
 from cmdline import create_parser
-from fonts import chicago, proggy_tiny
+from fonts import chicago, default
 from common import center_text
 
 
@@ -50,7 +50,7 @@ def hw_monitor(device, args):
     with canvas(virtual) as draw:
         draw.bitmap((0, 0), logo, fill='white')
         center_text(draw, device.width, 40, args.title or 'Threadripper 1950x', font=chicago, fill='white')
-        center_text(draw, device.width, 54, f'{platform.system()} {platform.release().replace("-generic", "")}', font=proggy_tiny, fill='white')
+        center_text(draw, device.width, 54, f'{platform.system()} {platform.release().replace("-generic", "")}', font=default, fill='white')
 
     offset = 76
     virtual.add_hotspot(snapshot(device.width, 12, cpu_percent.render, interval=0.5), (0, offset))

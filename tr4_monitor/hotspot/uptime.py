@@ -3,13 +3,14 @@
 # See LICENSE.rst for details.
 
 from datetime import datetime
+from humanize import naturaldelta
 import psutil
 
 from common import right_text
-from fonts import proggy_tiny
+from fonts import default
 
 
 def render(draw, width, height):
-    uptime = str(datetime.now() - datetime.fromtimestamp(psutil.boot_time())).split('.')[0].replace(' days', 'd')
-    draw.text((0, 0), 'Uptime:', fill='white', font=proggy_tiny)
-    right_text(draw, width, 0, text=uptime, font=proggy_tiny)
+    uptime = naturaldelta(datetime.now() - datetime.fromtimestamp(psutil.boot_time()))
+    draw.text((0, 0), 'Uptime', fill='white', font=default)
+    right_text(draw, width, 0, text=uptime, font=default)

@@ -6,14 +6,14 @@ from humanize import naturalsize
 import psutil
 
 from common import right_text
-from fonts import proggy_tiny
+from fonts import default
 
 
 def interface(iface):
 
     def render(draw, width, height):
         stat = psutil.net_io_counters(pernic=True)[iface]
-        draw.text((0, 0), f'{iface}:', fill='white', font=proggy_tiny)
-        right_text(draw, width, 0, text=f'{naturalsize(stat.bytes_sent, gnu=True)}B/{naturalsize(stat.bytes_recv, gnu=True)}B', font=proggy_tiny)
+        draw.text((0, 0), f'{iface}', fill='white', font=default)
+        right_text(draw, width, 0, text=f'{naturalsize(stat.bytes_sent, gnu=True)}B / {naturalsize(stat.bytes_recv, gnu=True)}B', font=default)
 
     return render

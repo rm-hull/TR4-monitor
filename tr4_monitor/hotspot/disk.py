@@ -6,14 +6,14 @@ from humanize import naturalsize
 import psutil
 
 from common import right_text
-from fonts import proggy_tiny
+from fonts import default
 
 
 def directory(dir):
 
     def render(draw, width, height):
         usage = psutil.disk_usage(dir)
-        draw.text((0, 0), f'Disk:', fill='white', font=proggy_tiny)
-        right_text(draw, width, 0, text=f'{naturalsize(usage.used, gnu=True)}B/{usage.percent}%', font=proggy_tiny)
+        draw.text((0, 0), f'Disk', fill='white', font=default)
+        right_text(draw, width, 0, text=f'{naturalsize(usage.used, gnu=True)}B / {usage.percent}%', font=default)
 
     return render

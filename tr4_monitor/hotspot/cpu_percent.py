@@ -5,10 +5,10 @@
 import psutil
 
 from common import right_text
-from fonts import proggy_tiny
+from fonts import default
 
 
 def render(draw, width, height):
     pct = psutil.cpu_percent()
-    draw.text((0, 0), 'CPU:', fill='white', font=proggy_tiny)
-    right_text(draw, width, 0, text=f'{pct:.2f}%', font=proggy_tiny)
+    draw.text((0, 0), 'CPU', fill='white', font=default)
+    right_text(draw, width, 0, text=f'{pct:.2f}%', font=default)

@@ -5,7 +5,7 @@
 import miniupnpc
 
 from common import right_text
-from fonts import proggy_tiny
+from fonts import default
 
 
 def discover():
@@ -18,9 +18,9 @@ def discover():
     ext_ip_addr = u.externalipaddress()
 
     def render(draw, width, height):
-        draw.text((0, 0), f'IP:', fill='white', font=proggy_tiny)
-        right_text(draw, width, 0, text=local_ip_addr, font=proggy_tiny)
-        right_text(draw, width, 12, text=ext_ip_addr, font=proggy_tiny)
+        draw.text((0, 0), f'IP', fill='white', font=default)
+        right_text(draw, width, 0, text=local_ip_addr, font=default)
+        right_text(draw, width, 12, text=ext_ip_addr, font=default)
 
     return render
 
