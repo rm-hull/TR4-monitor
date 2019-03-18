@@ -17,7 +17,6 @@ def create_parser():
         type=str,
         help='Load configuration settings from a file')
 
-
     parser.add_argument('--rotate', '-r',
         type=int,
         default=0,
