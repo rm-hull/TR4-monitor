@@ -17,6 +17,7 @@ connected to a USB port via an FT232H adapter.
 * [USB FT232H Adapter](https://www.aliexpress.com/item/NEW-CJMCU-FT232H-Multifunction-High-Speed-USB-to-JTAG-UART-FIFO-SPI-I2C-Module/32817479989.html)
 * [Dark smoked grey acrylic sheet](https://www.ebay.co.uk/itm/142366439906)
 * [9 Pin Header To Dual USB 2.0 Type A Female](https://www.ebay.co.uk/itm/283026195250)
+* [10K Thermistor](https://www.ebay.co.uk/itm/372599947543)
 
 ## Installation
 
