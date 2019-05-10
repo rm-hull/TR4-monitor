@@ -82,9 +82,8 @@ def get_device(args):
         return Device(mode='1', **vars(args))
     else:
         from luma.oled.device import ssd1309
-        from ftdi import get_luma_compatible_serial_interface
-        serial = get_luma_compatible_serial_interface()
-        return ssd1309(serial, **vars(args))
+        from luma.core.interface.serial import ftdi_spi
+        return ssd1309(ftdi_spi(), **vars(args))
 
 
 def main():

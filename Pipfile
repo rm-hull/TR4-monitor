@@ -12,7 +12,7 @@ flake8 = "*"
 
 [packages]
 "luma.oled" = "*"
-pyftdi = "*"
+"luma.core" = ">=1.9"
 psutil = "*"
 pysensors3 = "*"
 humanize = "*"
