@@ -5,6 +5,8 @@
 import os
 import sys
 import platform
+import psutil
+import signal
 
 from luma.core.sprite_system import framerate_regulator
 from luma.core.virtual import viewport, snapshot
@@ -15,6 +17,10 @@ from PIL import Image
 from cmdline import create_parser
 from fonts import chicago, default
 from common import center_text
+from hotspot import cpu_percent, cpu_barchart, cpu_stats
+from hotspot import uptime, system_load, loadavg_chart
+from hotspot import network, memory, disk
+from data_logger import DataLogger
 
 
 def position(max):
@@ -41,34 +47,43 @@ def pause_every(interval, stop_for, generator):
 
 
 def hw_monitor(device, args):
-    from hotspot import cpu_percent, cpu_barchart, cpu_stats, uptime, system_load, network, memory, disk
-    img_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'images', 'amd-ryzen-logo.png'))
-    logo = Image.open(img_path)
+    loadavg_data_logger = DataLogger(psutil.getloadavg, max_entries=device.width - 2).start()
 
+    def keyboardInterruptHandler(signal, frame):
+        loadavg_data_logger.stop()
+        exit(0)
+
+    signal.signal(signal.SIGINT, keyboardInterruptHandler)
+
+    # Needs luma.core PR #161 merging
+    # virtual = viewport(device, width=device.width, height=768, mode='RGBA', dither=True)
     virtual = viewport(device, width=device.width, height=768)
     with canvas(virtual) as draw:
+        img_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'images', 'amd-ryzen-logo.png'))
+        logo = Image.open(img_path)
         draw.bitmap((0, 0), logo, fill='white')
         center_text(draw, device.width, 40, args.title or 'Threadripper 1950x', font=chicago, fill='white')
         center_text(draw, device.width, 54, f'{platform.system()} {platform.release().replace("-generic", "")}', font=default, fill='white')
-
+        
     hotspots = [
         snapshot(device.width, 10, cpu_percent.render, interval=0.5),
         snapshot(device.width, cpu_barchart.height + 4, cpu_barchart.render, interval=0.5),
-        snapshot(device.width, cpu_stats.height, cpu_stats.render, interval=2),
-        snapshot(device.width, 10, uptime.render, interval=10),
+        snapshot(device.width, cpu_stats.height + 13, cpu_stats.render, interval=2),
+        snapshot(device.width, uptime.height, uptime.render, interval=10),
         snapshot(device.width, 10, system_load.render, interval=1.0),
+        snapshot(device.width, loadavg_chart.height, loadavg_chart.using(loadavg_data_logger), interval=1.0),
         snapshot(device.width, 10, memory.render, interval=5.0),
         snapshot(device.width, 20, disk.directory('/'), interval=5.0),
         snapshot(device.width, 30, network.interface(args.network), interval=2.0)
     ]
-    
+
     offset = 64
     for hotspot in hotspots:
         virtual.add_hotspot(hotspot, (0, offset))
         offset += hotspot.height
 
     # time.sleep(5.0)
-    for y in pause_every(64, 64, position(132)):
+    for y in pause_every(64, 64, position(170)):
         with framerate_regulator():
             virtual.set_position((0, y))
 
