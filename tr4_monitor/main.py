@@ -87,7 +87,7 @@ def get_device(args):
     if 'emulator' in args and args.emulator:
         import luma.emulator.device
         Device = getattr(luma.emulator.device, args.emulator)
-        return Device(mode='1', **vars(args))
+        return Device(**vars(args))
     else:
         from luma.oled.device import ssd1309
         from luma.core.interface.serial import ftdi_spi

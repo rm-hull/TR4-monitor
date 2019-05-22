@@ -9,7 +9,8 @@ from luma.core.cmdline import get_choices, get_transformer_choices
 
 def create_parser():
     rotation_choices = [0, 1, 2, 3]
-
+    color_choices = ['1', 'RGB', 'RGBA']
+    
     parser = argparse.ArgumentParser(description='TR4 system monitor',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
@@ -34,6 +35,8 @@ def create_parser():
         default='en0',
         help='Network interface to report usage against.',
         metavar='NETWORK')
+
+    parser.add_argument('--mode', type=str, default='RGB', help='Colour mode (SSD1322, SSD1325 and emulator only). Allowed values are: {0}'.format(', '.join(color_choices)), choices=color_choices, metavar='MODE')
 
     emulator_choices = sorted(get_choices('luma.emulator.device'))
     if emulator_choices:
