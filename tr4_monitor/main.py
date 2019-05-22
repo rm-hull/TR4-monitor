@@ -41,7 +41,7 @@ def pause_every(interval, stop_for, generator):
 
 
 def hw_monitor(device, args):
-    from hotspot import cpu_percent, uptime, system_load, network, memory, disk
+    from hotspot import cpu_percent, cpu_barchart, cpu_stats, uptime, system_load, network, memory, disk
     img_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'images', 'amd-ryzen-logo.png'))
     logo = Image.open(img_path)
 
@@ -51,16 +51,24 @@ def hw_monitor(device, args):
         center_text(draw, device.width, 40, args.title or 'Threadripper 1950x', font=chicago, fill='white')
         center_text(draw, device.width, 54, f'{platform.system()} {platform.release().replace("-generic", "")}', font=default, fill='white')
 
+    hotspots = [
+        snapshot(device.width, 10, cpu_percent.render, interval=0.5),
+        snapshot(device.width, cpu_barchart.height + 4, cpu_barchart.render, interval=0.5),
+        snapshot(device.width, cpu_stats.height, cpu_stats.render, interval=2),
+        snapshot(device.width, 10, uptime.render, interval=10),
+        snapshot(device.width, 10, system_load.render, interval=1.0),
+        snapshot(device.width, 10, memory.render, interval=5.0),
+        snapshot(device.width, 20, disk.directory('/'), interval=5.0),
+        snapshot(device.width, 30, network.interface(args.network), interval=2.0)
+    ]
+    
     offset = 64
-    virtual.add_hotspot(snapshot(device.width, 10, cpu_percent.render, interval=0.5), (0, offset))
-    virtual.add_hotspot(snapshot(device.width, 10, uptime.render, interval=10), (0, offset + 10))
-    virtual.add_hotspot(snapshot(device.width, 10, system_load.render, interval=1.0), (0, offset + 20))
-    virtual.add_hotspot(snapshot(device.width, 10, memory.render, interval=5.0), (0, offset + 30))
-    virtual.add_hotspot(snapshot(device.width, 10, disk.directory('/'), interval=5.0), (0, offset + 40))
-    virtual.add_hotspot(snapshot(device.width, 30, network.interface(args.network), interval=2.0), (0, offset + 64))
+    for hotspot in hotspots:
+        virtual.add_hotspot(hotspot, (0, offset))
+        offset += hotspot.height
 
     # time.sleep(5.0)
-    for y in pause_every(64, 40, position(132)):
+    for y in pause_every(64, 64, position(132)):
         with framerate_regulator():
             virtual.set_position((0, y))
 
