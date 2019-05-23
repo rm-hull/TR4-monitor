@@ -19,11 +19,11 @@ def render(draw, width, height):
         draw.rectangle([x, y, x + bar_width, y + bar_height], outline='white', width=1)
 
     for i in range(0, cpu_count, 4):
-        y_offset = i * (bar_height + 1)
+        y_offset = (i // 4) * (bar_height + 2)
         draw_gauge([0, y_offset], pct[i])
         draw_gauge([width * 0.25, y_offset], pct[i + 1])
         draw_gauge([width * 0.50, y_offset], pct[i + 2])
         draw_gauge([width * 0.75, y_offset], pct[i + 3])
 
 
-height = int((bar_height + 1) * (cpu_count / 4))
+height = int((bar_height + 2) * (cpu_count / 4))

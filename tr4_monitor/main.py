@@ -66,14 +66,14 @@ def hw_monitor(device, args):
         center_text(draw, device.width, 54, f'{platform.system()} {platform.release().replace("-generic", "")}', font=default, fill='white')
         
     hotspots = [
-        snapshot(device.width, 10, cpu_percent.render, interval=0.5),
+        snapshot(device.width, 9, cpu_percent.render, interval=0.5),
         snapshot(device.width, cpu_barchart.height + 4, cpu_barchart.render, interval=0.5),
-        snapshot(device.width, cpu_stats.height + 13, cpu_stats.render, interval=2),
+        snapshot(device.width, cpu_stats.height + 11, cpu_stats.render, interval=2),
         snapshot(device.width, uptime.height, uptime.render, interval=10),
         snapshot(device.width, 10, system_load.render, interval=1.0),
         snapshot(device.width, loadavg_chart.height, loadavg_chart.using(loadavg_data_logger), interval=1.0),
         snapshot(device.width, 10, memory.render, interval=5.0),
-        snapshot(device.width, 20, disk.directory('/'), interval=5.0),
+        snapshot(device.width, 28, disk.directory('/'), interval=5.0),
         snapshot(device.width, 30, network.interface(args.network), interval=2.0)
     ]
 
@@ -83,7 +83,7 @@ def hw_monitor(device, args):
         offset += hotspot.height
 
     # time.sleep(5.0)
-    for y in pause_every(64, 64, position(170)):
+    for y in pause_every(64, 64, position(offset)):
         with framerate_regulator():
             virtual.set_position((0, y))
 
