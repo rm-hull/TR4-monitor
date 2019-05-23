@@ -23,13 +23,20 @@ from hotspot import network, memory, disk
 from data_logger import DataLogger
 
 
-def position(max):
+def up_and_down(max):
     forwards = range(0, max)
     backwards = range(max, 0, -1)
     while True:
         for x in forwards:
             yield x
         for x in backwards:
+            yield x
+
+
+def infinite(max):
+    forwards = range(0, max)
+    while True:
+        for x in forwards:
             yield x
 
 
@@ -44,6 +51,16 @@ def pause_every(interval, stop_for, generator):
                 yield x
     except StopIteration:
         pass
+        
+
+def render_logo(draw, y_offset, width, title):
+    img_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'images', 'amd-ryzen-logo.png'))
+    with open(img_path, 'r+b') as fp:
+        logo = Image.open(fp)
+        draw.bitmap((0, y_offset), logo, fill='white')
+        center_text(draw, width, y_offset + 40, title or 'Threadripper 1950x', font=chicago, fill='white')
+        center_text(draw, width, y_offset + 54, f'{platform.system()} {platform.release().replace("-generic", "")}', font=default, fill='white')
+        return 64
 
 
 def hw_monitor(device, args):
@@ -59,31 +76,28 @@ def hw_monitor(device, args):
     # virtual = viewport(device, width=device.width, height=768, mode='RGBA', dither=True)
     virtual = viewport(device, width=device.width, height=768)
     with canvas(virtual) as draw:
-        img_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'images', 'amd-ryzen-logo.png'))
-        logo = Image.open(img_path)
-        draw.bitmap((0, 0), logo, fill='white')
-        center_text(draw, device.width, 40, args.title or 'Threadripper 1950x', font=chicago, fill='white')
-        center_text(draw, device.width, 54, f'{platform.system()} {platform.release().replace("-generic", "")}', font=default, fill='white')
+        y_offset = render_logo(draw, 0, device.width, args.title)
         
-    hotspots = [
-        snapshot(device.width, 9, cpu_percent.render, interval=0.5),
-        snapshot(device.width, cpu_barchart.height + 4, cpu_barchart.render, interval=0.5),
-        snapshot(device.width, cpu_stats.height + 11, cpu_stats.render, interval=2),
-        snapshot(device.width, uptime.height, uptime.render, interval=10),
-        snapshot(device.width, 10, system_load.render, interval=1.0),
-        snapshot(device.width, loadavg_chart.height, loadavg_chart.using(loadavg_data_logger), interval=1.0),
-        snapshot(device.width, 10, memory.render, interval=5.0),
-        snapshot(device.width, 28, disk.directory('/'), interval=5.0),
-        snapshot(device.width, 30, network.interface(args.network), interval=2.0)
-    ]
+        hotspots = [
+            snapshot(device.width, 9, cpu_percent.render, interval=0.5),
+            snapshot(device.width, cpu_barchart.height + 4, cpu_barchart.render, interval=0.5),
+            snapshot(device.width, cpu_stats.height + 11, cpu_stats.render, interval=2),
+            snapshot(device.width, uptime.height, uptime.render, interval=10),
+            snapshot(device.width, 10, system_load.render, interval=1.0),
+            snapshot(device.width, loadavg_chart.height, loadavg_chart.using(loadavg_data_logger), interval=1.0),
+            snapshot(device.width, 10, memory.render, interval=5.0),
+            snapshot(device.width, 28, disk.directory('/'), interval=5.0),
+            snapshot(device.width, 62, network.interface(args.network), interval=2.0)
+        ]
 
-    offset = 64
-    for hotspot in hotspots:
-        virtual.add_hotspot(hotspot, (0, offset))
-        offset += hotspot.height
+        for hotspot in hotspots:
+            virtual.add_hotspot(hotspot, (0, y_offset))
+            y_offset += hotspot.height
 
+        render_logo(draw, y_offset, device.width, args.title)
+        
     # time.sleep(5.0)
-    for y in pause_every(64, 64, position(offset)):
+    for y in pause_every(64, 64, infinite(y_offset)):
         with framerate_regulator():
             virtual.set_position((0, y))
 
