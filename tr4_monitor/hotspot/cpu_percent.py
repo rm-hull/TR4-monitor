@@ -9,6 +9,7 @@ from fonts import default
 
 
 def render(draw, width, height):
-    pct = psutil.cpu_percent()
-    draw.text((0, 0), 'CPU', fill='white', font=default)
-    right_text(draw, width, 0, text=f'{pct:.2f}%', font=default)
+    percent = psutil.cpu_percent()
+    freq = psutil.cpu_freq().current
+    draw.text((0, 0), f'CPU   {freq:.0f} MHz', fill='white', font=default)
+    right_text(draw, width, 0, text=f'{percent:.2f}%', font=default)
