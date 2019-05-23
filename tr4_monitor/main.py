@@ -51,7 +51,7 @@ def pause_every(interval, stop_for, generator):
                 yield x
     except StopIteration:
         pass
-        
+
 
 def render_logo(draw, y_offset, width, title):
     img_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'images', 'amd-ryzen-logo.png'))
@@ -77,7 +77,7 @@ def hw_monitor(device, args):
     virtual = viewport(device, width=device.width, height=768)
     with canvas(virtual) as draw:
         y_offset = render_logo(draw, 0, device.width, args.title)
-        
+
         hotspots = [
             snapshot(device.width, 9, cpu_percent.render, interval=0.5),
             snapshot(device.width, cpu_barchart.height + 4, cpu_barchart.render, interval=0.5),
@@ -95,7 +95,7 @@ def hw_monitor(device, args):
             y_offset += hotspot.height
 
         render_logo(draw, y_offset, device.width, args.title)
-        
+
     # time.sleep(5.0)
     for y in pause_every(64, 64, infinite(y_offset)):
         with framerate_regulator():

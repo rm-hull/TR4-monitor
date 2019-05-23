@@ -18,4 +18,3 @@ def render(draw, width, height):
     right_text(draw, width, 10, text=str(stats.interrupts), font=default)
     draw.text((10, 20), 'Soft intr', fill='white', font=default)
     right_text(draw, width, 20, text=str(stats.soft_interrupts), font=default)
-    

@@ -23,7 +23,7 @@ def interface(iface):
 
     local_ip_addr = u.lanaddr
     ext_ip_addr = u.externalipaddress()
-    
+
     def render(draw, width, height):
         global count
         global last_invoked
@@ -51,9 +51,9 @@ def interface(iface):
         draw.text((0, 20), f' Down:', fill='white', font=default)
         draw.text((36, 20), f'{naturalsize(download_rate)}B/s', fill='white', font=default)
         right_text(draw, width, 20, text=f'{naturalsize(stat.bytes_recv)}B', fill='white', font=default)
-        
+
         last_invoked = datetime.now()
         prev = stat
         count += 1
-        
+
     return render

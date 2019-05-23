@@ -1,6 +1,6 @@
 from datetime import datetime
 import threading
-import time 
+import time
 
 
 class DataLogger:

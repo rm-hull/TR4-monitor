@@ -4,13 +4,13 @@
 
 import argparse
 
-from luma.core.cmdline import get_choices, get_transformer_choices    
+from luma.core.cmdline import get_choices, get_transformer_choices
 
 
 def create_parser():
     rotation_choices = [0, 1, 2, 3]
     color_choices = ['1', 'RGB', 'RGBA']
-    
+
     parser = argparse.ArgumentParser(description='TR4 system monitor',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
@@ -24,12 +24,12 @@ def create_parser():
         help='Rotation factor. Allowed values are: {0}'.format(', '.join([str(x) for x in rotation_choices])),
         choices=rotation_choices,
         metavar='ROTATION')
-    
+
     parser.add_argument('--title', '-t',
         type=str,
         help='Show title instead of CPU name',
         metavar='TITLE')
-          
+
     parser.add_argument('--network', '-n',
         type=str,
         default='en0',
