@@ -72,9 +72,7 @@ def hw_monitor(device, args):
 
     signal.signal(signal.SIGINT, keyboardInterruptHandler)
 
-    # Needs luma.core PR #161 merging
-    # virtual = viewport(device, width=device.width, height=768, mode='RGBA', dither=True)
-    virtual = viewport(device, width=device.width, height=768)
+    virtual = viewport(device, width=device.width, height=768, mode='RGBA', dither=True)
     with canvas(virtual) as draw:
         y_offset = render_logo(draw, 0, device.width, args.title)
 

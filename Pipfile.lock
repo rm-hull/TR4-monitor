@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ec699c8e35867eaee418ee8209213f3663a4f9d1965ae4871c2ed30747a6a9f5"
+            "sha256": "8f07617c626e2f0b384f73789986652619d0f372b6f8243d1ee66c034b382de9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -25,11 +25,11 @@
         },
         "luma.core": {
             "hashes": [
-                "sha256:0d14d04a76d98bb6f196760dba16ef64b1a6967265889ac16b8aef53ba81d66b",
-                "sha256:9b42da8be55a57805365ce5977310b57c67cf779a68efd04610be417f01fa508"
+                "sha256:7965419f0244d0e051f47a0359924b61388d33276131b46df74195195dc3fe74",
+                "sha256:dac3a89c0e73482232f5619f8897400c2da8bb3d5f6396eaaf4814d5b5e5fce5"
             ],
             "index": "pypi",
-            "version": "==1.9.0"
+            "version": "==1.10.0"
         },
         "luma.oled": {
             "hashes": [
@@ -166,11 +166,11 @@
         },
         "luma.core": {
             "hashes": [
-                "sha256:0d14d04a76d98bb6f196760dba16ef64b1a6967265889ac16b8aef53ba81d66b",
-                "sha256:9b42da8be55a57805365ce5977310b57c67cf779a68efd04610be417f01fa508"
+                "sha256:7965419f0244d0e051f47a0359924b61388d33276131b46df74195195dc3fe74",
+                "sha256:dac3a89c0e73482232f5619f8897400c2da8bb3d5f6396eaaf4814d5b5e5fce5"
             ],
             "index": "pypi",
-            "version": "==1.9.0"
+            "version": "==1.10.0"
         },
         "luma.emulator": {
             "hashes": [
