@@ -6,6 +6,7 @@ import os
 import sys
 import platform
 import psutil
+import sensors
 import signal
 
 from luma.core.sprite_system import framerate_regulator
@@ -19,7 +20,7 @@ from fonts import chicago, default
 from common import center_text
 from hotspot import cpu_percent, cpu_barchart, cpu_stats
 from hotspot import uptime, system_load, loadavg_chart
-from hotspot import network, memory, disk
+from hotspot import network, memory, disk, sensors_chart
 from data_logger import DataLogger
 
 
@@ -63,11 +64,23 @@ def render_logo(draw, y_offset, width, title):
         return 64
 
 
+def collect_sensor_data():
+    return {
+        f'{chip}.{feature.label}': feature.get_value()
+        for chip in sensors.iter_detected_chips()
+        for feature in chip
+    }
+
+
 def hw_monitor(device, args):
+    sensors.init()
+    sensors_spec = dict(CPU='it8686-isa-0a40.temp3', Chipset='it8686-isa-0a40.temp2', System='it8792-isa-0a60.temp3')
+    sensors_data_logger = DataLogger(collect_sensor_data, max_entries=(device.width / 2) - 10).start()
     loadavg_data_logger = DataLogger(psutil.getloadavg, max_entries=device.width - 2).start()
 
     def keyboardInterruptHandler(signal, frame):
         loadavg_data_logger.stop()
+        sensors_data_logger.stop()
         exit(0)
 
     signal.signal(signal.SIGINT, keyboardInterruptHandler)
@@ -85,7 +98,8 @@ def hw_monitor(device, args):
             snapshot(device.width, loadavg_chart.height, loadavg_chart.using(loadavg_data_logger), interval=1.0),
             snapshot(device.width, 10, memory.render, interval=5.0),
             snapshot(device.width, 28, disk.directory('/'), interval=5.0),
-            snapshot(device.width, 62, network.interface(args.network), interval=2.0)
+            snapshot(device.width, 62, network.interface(args.network), interval=2.0),
+            snapshot(device.width, 64, sensors_chart.using(sensors_data_logger, sensors_spec), interval=1.0)
         ]
 
         for hotspot in hotspots:
