@@ -120,7 +120,7 @@ def hw_monitor(device, args):
         render_logo(draw, y_offset, device.width, args.title)
 
     # time.sleep(5.0)
-    for y in pause_every(64, 64, infinite(y_offset)):
+    for y in pause_every(64, 96, infinite(y_offset)):
         with framerate_regulator():
             virtual.set_position((0, y))
 
