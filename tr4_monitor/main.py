@@ -74,7 +74,18 @@ def collect_sensor_data():
 
 def hw_monitor(device, args):
     sensors.init()
-    sensors_spec = dict(CPU='it8686-isa-0a40.temp3', Chipset='it8686-isa-0a40.temp2', System='it8792-isa-0a60.temp3')
+    sensors_spec = dict(
+        CPU='it8686-isa-0a40.temp3',
+        GPU='amdgpu-pci-4200.temp1',
+        Chipset='it8686-isa-0a40.temp2',
+        System='it8792-isa-0a60.temp3')
+
+    fan_spec = dict(
+        CPU='it8686-isa-0a40.fan1',
+        GPU='amdgpu-pci-4200.fan1',
+        Rear='it8792-isa-0a60.fan3',
+        SYS1='it8686-isa-0a40.fan2')
+
     sensors_data_logger = DataLogger(collect_sensor_data, max_entries=(device.width / 2) - 10).start()
     loadavg_data_logger = DataLogger(psutil.getloadavg, max_entries=device.width - 2).start()
 
@@ -99,7 +110,7 @@ def hw_monitor(device, args):
             snapshot(device.width, 10, memory.render, interval=5.0),
             snapshot(device.width, 28, disk.directory('/'), interval=5.0),
             snapshot(device.width, 62, network.interface(args.network), interval=2.0),
-            snapshot(device.width, 64, sensors_chart.using(sensors_data_logger, sensors_spec), interval=1.0)
+            snapshot(device.width, 64, sensors_chart.using(sensors_data_logger, sensors_spec, fan_spec), interval=1.0)
         ]
 
         for hotspot in hotspots:
