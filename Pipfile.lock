@@ -25,11 +25,11 @@
         },
         "luma.core": {
             "hashes": [
-                "sha256:7965419f0244d0e051f47a0359924b61388d33276131b46df74195195dc3fe74",
-                "sha256:dac3a89c0e73482232f5619f8897400c2da8bb3d5f6396eaaf4814d5b5e5fce5"
+                "sha256:53d4186f13d901dce27d131213b06c63ea3bd124329608ea52f63ecfdd7e4d4f",
+                "sha256:f456b199bbf8c13c7ac56c703ed9491c1bcdd66bd99b7728abac804b6b64f5bf"
             ],
             "index": "pypi",
-            "version": "==1.10.0"
+            "version": "==1.11.0"
         },
         "luma.oled": {
             "hashes": [
@@ -166,11 +166,11 @@
         },
         "luma.core": {
             "hashes": [
-                "sha256:7965419f0244d0e051f47a0359924b61388d33276131b46df74195195dc3fe74",
-                "sha256:dac3a89c0e73482232f5619f8897400c2da8bb3d5f6396eaaf4814d5b5e5fce5"
+                "sha256:53d4186f13d901dce27d131213b06c63ea3bd124329608ea52f63ecfdd7e4d4f",
+                "sha256:f456b199bbf8c13c7ac56c703ed9491c1bcdd66bd99b7728abac804b6b64f5bf"
             ],
             "index": "pypi",
-            "version": "==1.10.0"
+            "version": "==1.11.0"
         },
         "luma.emulator": {
             "hashes": [
