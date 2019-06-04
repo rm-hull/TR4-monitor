@@ -28,7 +28,7 @@ class DataLogger:
             raise Exception('Data logger is already running')
 
         self._keep_going = True
-        self._thread = threading.Thread(target=self._capture)
+        self._thread = threading.Thread(name='DataLogger-Thread', target=self._capture, daemon=True)
         self._thread.start()
         return self
 
