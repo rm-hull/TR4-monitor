@@ -45,11 +45,11 @@ def interface(iface):
         right_text(draw, width, 0, text=ip_addr, fill="white", font=default)
 
         draw.text((0, 10), f' Up:', fill='white', font=default)
-        draw.text((36, 10), f'{naturalsize(upload_rate)}B/s', fill='white', font=default)
+        right_text(draw, width - 44, 10, text=f'{naturalsize(upload_rate)}B/s', fill='white', font=default)
         right_text(draw, width, 10, text=f'{naturalsize(stat.bytes_sent)}B', fill='white', font=default)
 
         draw.text((0, 20), f' Down:', fill='white', font=default)
-        draw.text((36, 20), f'{naturalsize(download_rate)}B/s', fill='white', font=default)
+        right_text(draw, width - 44, 20, text=f'{naturalsize(download_rate)}B/s', fill='white', font=default)
         right_text(draw, width, 20, text=f'{naturalsize(stat.bytes_recv)}B', fill='white', font=default)
 
         last_invoked = datetime.now()
