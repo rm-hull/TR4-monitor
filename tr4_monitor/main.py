@@ -88,10 +88,12 @@ def hw_monitor(device, args):
 
     sensors_data_logger = DataLogger(collect_sensor_data, max_entries=(device.width / 2) - 10).start()
     loadavg_data_logger = DataLogger(psutil.getloadavg, max_entries=device.width - 2).start()
+    network_data_logger = DataLogger(lambda: psutil.net_io_counters(pernic=True)[args.network], max_entries=device.width / 2 - 15).start()
 
     def keyboardInterruptHandler(signal, frame):
         loadavg_data_logger.stop()
         sensors_data_logger.stop()
+        network_data_logger.stop()
         exit(0)
 
     signal.signal(signal.SIGINT, keyboardInterruptHandler)
@@ -109,7 +111,7 @@ def hw_monitor(device, args):
             snapshot(device.width, loadavg_chart.height, loadavg_chart.using(loadavg_data_logger), interval=1.0),
             snapshot(device.width, 10, memory.render, interval=5.0),
             snapshot(device.width, 28, disk.directory('/'), interval=5.0),
-            snapshot(device.width, 62, network.interface(args.network), interval=2.0),
+            snapshot(device.width, network.height, network.using(args.network, network_data_logger), interval=2.0),
             snapshot(device.width, 64, sensors_chart.using(sensors_data_logger, sensors_spec, fan_spec), interval=1.0)
         ]
 
