@@ -6,7 +6,6 @@ import os
 import sys
 import platform
 import psutil
-import sensors
 import signal
 
 from luma.core.sprite_system import framerate_regulator
@@ -64,16 +63,26 @@ def render_logo(draw, y_offset, width, title):
         return 64
 
 
-def collect_sensor_data():
-    return {
-        f'{chip}.{feature.label}': feature.get_value()
-        for chip in sensors.iter_detected_chips()
-        for feature in chip
-    }
+def init_sensors():
+    try:
+        import sensors
+    except:
+        return lambda: {}
+
+    def collect_sensor_data():
+        return {
+            f'{chip}.{feature.label}': feature.get_value()
+            for chip in sensors.iter_detected_chips()
+            for feature in chip
+        }
+
+    sensors.init()
+    return collect_sensor_data
 
 
 def hw_monitor(device, args):
-    sensors.init()
+    collect_sensor_data = init_sensors()
+
     sensors_spec = dict(
         CPU='it8686-isa-0a40.temp3',
         GPU='amdgpu-pci-4200.temp1',
