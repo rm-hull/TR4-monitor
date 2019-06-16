@@ -17,6 +17,8 @@ psutil = "*"
 pysensors3 = "*"
 humanize = "*"
 miniupnpc = "*"
+beautifulsoup4 = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"

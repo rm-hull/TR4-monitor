@@ -20,6 +20,7 @@ from common import center_text
 from hotspot import cpu_percent, cpu_barchart, cpu_stats
 from hotspot import uptime, system_load, loadavg_chart
 from hotspot import network, memory, disk, sensors_chart
+from hotspot import device_list
 from data_logger import DataLogger
 
 
@@ -107,7 +108,7 @@ def hw_monitor(device, args):
 
     signal.signal(signal.SIGINT, keyboardInterruptHandler)
 
-    virtual = viewport(device, width=device.width, height=768, mode='RGBA', dither=True)
+    virtual = viewport(device, width=device.width, height=1024, mode='RGBA', dither=True)
     with canvas(virtual) as draw:
         y_offset = render_logo(draw, 0, device.width, args.title)
 
@@ -121,7 +122,8 @@ def hw_monitor(device, args):
             snapshot(device.width, 10, memory.render, interval=5.0),
             snapshot(device.width, 28, disk.directory('/'), interval=5.0),
             snapshot(device.width, network.height, network.using(args.network, network_data_logger), interval=2.0),
-            snapshot(device.width, 64, sensors_chart.using(sensors_data_logger, sensors_spec, fan_spec), interval=1.0)
+            snapshot(device.width, 64, sensors_chart.using(sensors_data_logger, sensors_spec, fan_spec), interval=1.0),
+            snapshot(device.width, 64 * 6, device_list.init('http://192.168.1.254'), interval=30)
         ]
 
         for hotspot in hotspots:
