@@ -21,7 +21,7 @@ def using(datalogger, temp_spec, fan_spec):
         snapshot = list(datalogger.entries)
         y_offset = 0
         height = 12
-        
+
         min_temp, max_temp, _ = get_temperature_scale(snapshot, temp_spec)
 
         for label, reading in temp_spec.items():
