@@ -86,7 +86,7 @@ def hw_monitor(device, args):
 
     sensors_spec = dict(
         CPU='it8686-isa-0a40.temp3',
-        GPU='amdgpu-pci-4200.temp1',
+        GPU='amdgpu-pci-4200.edge',
         Chipset='it8686-isa-0a40.temp2',
         System='it8792-isa-0a60.temp3')
 
