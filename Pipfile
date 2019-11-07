@@ -6,7 +6,7 @@ name = "pypi"
 [dev-packages]
 "autopep8" = "*"
 "luma.emulator" = "*"
-pygame = ">=2.0.0.dev1"
+pygame = ">=2.0.0.dev6"
 rope = "*"
 flake8 = "*"
 
