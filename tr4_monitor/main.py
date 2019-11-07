@@ -100,13 +100,14 @@ def hw_monitor(device, args):
     loadavg_data_logger = DataLogger(psutil.getloadavg, max_entries=device.width - 2).start()
     network_data_logger = DataLogger(lambda: psutil.net_io_counters(pernic=True)[args.network], max_entries=device.width / 2 - 15).start()
 
-    def keyboardInterruptHandler(signal, frame):
+    def shutdownHandler(signal, frame):
         loadavg_data_logger.stop()
         sensors_data_logger.stop()
         network_data_logger.stop()
         exit(0)
 
-    signal.signal(signal.SIGINT, keyboardInterruptHandler)
+    signal.signal(signal.SIGINT, shutdownHandler)
+    signal.signal(signal.SIGTERM, shutdownHandler)
 
     virtual = viewport(device, width=device.width, height=1024, mode='RGBA', dither=True)
     with canvas(virtual) as draw:
