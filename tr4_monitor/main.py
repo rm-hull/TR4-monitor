@@ -67,7 +67,7 @@ def render_logo(draw, y_offset, width, title):
 def init_sensors():
     try:
         import sensors
-    except:
+    except ImportError:
         return lambda: {}
 
     def collect_sensor_data():
