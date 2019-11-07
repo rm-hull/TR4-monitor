@@ -26,10 +26,10 @@ def using(datalogger, temp_spec, fan_spec):
 
         for label, reading in temp_spec.items():
             latest_temp = snapshot[-1]['value'].get(reading)
-            latest_temp = 'n/a' if latest_temp is None else int(latest_temp)
+            latest_temp = 'n/a' if latest_temp is None else f'{latest_temp:.0f}°C'
 
             draw.text((0, y_offset + 1), label, fill='white', font=default)
-            right_text(draw, width / 2 + 8, y_offset + 1, text=f'{latest_temp}°C', font=default)
+            right_text(draw, width / 2 + 8, y_offset + 1, text=latest_temp, font=default)
 
             for index, entry in enumerate(reversed(snapshot)):
                 x_offset = width - index - 2
