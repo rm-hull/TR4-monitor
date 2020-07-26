@@ -12,16 +12,17 @@ flake8 = "*"
 
 [packages]
 "luma.oled" = "*"
-"luma.core" = ">=1.10"
+"luma.core" = ">=1.14.1"
 psutil = "*"
 pysensors3 = "*"
 humanize = "*"
 miniupnpc = "*"
 beautifulsoup4 = "*"
 requests = "*"
+pillow = "==7.0.0"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"
 
 [pipenv]
 allow_prereleases = true
