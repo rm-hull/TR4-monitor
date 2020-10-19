@@ -7,6 +7,7 @@ import sys
 import platform
 import psutil
 import signal
+import time
 
 from luma.core.sprite_system import framerate_regulator
 from luma.core.virtual import viewport, snapshot
@@ -41,6 +42,14 @@ def infinite(max):
             yield x
 
 
+def stepper(interval, max, stop_for):
+    forwards = range(0, max, interval)
+    while True:
+        for x in forwards:
+            for _ in range(stop_for):
+                yield x
+
+
 def pause_every(interval, stop_for, generator):
     try:
         while True:
@@ -71,11 +80,15 @@ def init_sensors():
         return lambda: {}
 
     def collect_sensor_data():
-        return {
-            f'{chip}.{feature.label}': feature.get_value()
-            for chip in sensors.iter_detected_chips()
-            for feature in chip
-        }
+        data = {}
+        for chip in sensors.iter_detected_chips():
+            for feature in chip:
+                try:
+                    data[f'{chip}.{feature.label}'] = feature.get_value()
+                except:  # noqa: E722
+                    pass
+                
+        return data
 
     sensors.init()
     return collect_sensor_data
@@ -134,7 +147,8 @@ def hw_monitor(device, args):
         render_logo(draw, y_offset, device.width, args.title)
 
     # time.sleep(5.0)
-    for y in pause_every(64, 96, infinite(y_offset)):
+    # for y in pause_every(64, 96, infinite(y_offset)):
+    for y in stepper(64, y_offset, 512):
         with framerate_regulator():
             virtual.set_position((0, y))
 

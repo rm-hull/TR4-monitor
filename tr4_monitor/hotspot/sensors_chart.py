@@ -12,7 +12,7 @@ def get_temperature_scale(snapshot, temp_spec):
     for _, reading in temp_spec.items():
         readings += [x['value'].get(reading, 0) for x in snapshot]
 
-    max_temp = max(readings)
+    max_temp = max(readings, default=0)
     return nice_ticks(0, max_temp)
 
 

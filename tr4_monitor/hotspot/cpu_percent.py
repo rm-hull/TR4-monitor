@@ -17,7 +17,7 @@ def render(draw, width, height):
     cpu_freqs = psutil.cpu_freq(percpu=True)
     max_freq = max(cpu_freqs, key=_get_current).current / 1024.0
     min_freq = min(cpu_freqs, key=_get_current).current / 1024.0
-    
+
     draw.text((0, 0), 'CPU', fill='white', font=default)
     right_text(draw, width, 0, text=f'{percent:.1f}%', font=default)
 
@@ -25,4 +25,3 @@ def render(draw, width, height):
         right_text(draw, width - 32, 0, text=f'{min_freq:.2f}/{max_freq:.2f} GHz', fill='white', font=default)
     else:
         right_text(draw, width - 40, 0, text=f'{max_freq:.2f} GHz', fill='white', font=default)
-    
