@@ -14,7 +14,11 @@ class DataLogger:
 
     def _capture(self):
         while (self._keep_going):
-            self.entries.append(dict(timestamp=datetime.now(), value=self._supplier()))
+            try:
+                self.entries.append(dict(timestamp=datetime.now(), value=self._supplier()))
+            except:  # noqa: E722
+                pass
+
             if len(self.entries) > self.max_entries:
                 self.entries.pop(0)
 
