@@ -19,7 +19,7 @@ humanize = "*"
 miniupnpc = "*"
 beautifulsoup4 = "*"
 requests = "*"
-pillow = "==7.0.0"
+pillow = "*"
 
 [requires]
 python_version = "3.8"
