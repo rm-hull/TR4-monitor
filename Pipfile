@@ -6,13 +6,13 @@ name = "pypi"
 [dev-packages]
 "autopep8" = "*"
 "luma.emulator" = "*"
-pygame = ">=2.0.0.dev6"
+pygame = ">=2.0.0"
 rope = "*"
 flake8 = "*"
 
 [packages]
 "luma.oled" = "*"
-"luma.core" = ">=1.14.1"
+"luma.core" = "*"
 psutil = "*"
 pysensors3 = "*"
 humanize = "*"
