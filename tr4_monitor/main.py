@@ -7,7 +7,6 @@ import sys
 import platform
 import psutil
 import signal
-import time
 
 from luma.core.sprite_system import framerate_regulator
 from luma.core.virtual import viewport, snapshot
@@ -64,12 +63,28 @@ def pause_every(interval, stop_for, generator):
 
 
 def render_logo(draw, y_offset, width, title):
-    img_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'images', 'amd-ryzen-logo.png'))
-    with open(img_path, 'r+b') as fp:
+    img_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "images", "amd-ryzen-logo.png")
+    )
+    with open(img_path, "r+b") as fp:
         logo = Image.open(fp)
-        draw.bitmap((0, y_offset), logo, fill='white')
-        center_text(draw, width, y_offset + 40, title or 'Threadripper 1950x', font=chicago, fill='white')
-        center_text(draw, width, y_offset + 54, f'{platform.system()} {platform.release().replace("-generic", "")}', font=default, fill='white')
+        draw.bitmap((0, y_offset), logo, fill="white")
+        center_text(
+            draw,
+            width,
+            y_offset + 40,
+            title or "Threadripper 1950x",
+            font=chicago,
+            fill="white",
+        )
+        center_text(
+            draw,
+            width,
+            y_offset + 54,
+            f'{platform.system()} {platform.release().replace("-generic", "")}',
+            font=default,
+            fill="white",
+        )
         return 64
 
 
@@ -84,10 +99,10 @@ def init_sensors():
         for chip in sensors.iter_detected_chips():
             for feature in chip:
                 try:
-                    data[f'{chip}.{feature.label}'] = feature.get_value()
+                    data[f"{chip}.{feature.label}"] = feature.get_value()
                 except:  # noqa: E722
                     pass
-                
+
         return data
 
     sensors.init()
@@ -98,20 +113,29 @@ def hw_monitor(device, args):
     collect_sensor_data = init_sensors()
 
     sensors_spec = dict(
-        CPU='it8686-isa-0a40.temp3',
-        GPU='amdgpu-pci-4200.edge',
-        Chipset='it8686-isa-0a40.temp2',
-        System='it8792-isa-0a60.temp3')
+        CPU="it8686-isa-0a40.temp3",
+        GPU="amdgpu-pci-4200.edge",
+        Chipset="it8686-isa-0a40.temp2",
+        System="it8792-isa-0a60.temp3",
+    )
 
     fan_spec = dict(
-        CPU='it8686-isa-0a40.fan1',
-        GPU='amdgpu-pci-4200.fan1',
-        Rear='it8792-isa-0a60.fan3',
-        SYS1='it8686-isa-0a40.fan2')
+        CPU="it8686-isa-0a40.fan1",
+        GPU="amdgpu-pci-4200.fan1",
+        Rear="it8792-isa-0a60.fan3",
+        SYS1="it8686-isa-0a40.fan2",
+    )
 
-    sensors_data_logger = DataLogger(collect_sensor_data, max_entries=(device.width / 2) - 10).start()
-    loadavg_data_logger = DataLogger(psutil.getloadavg, max_entries=device.width - 2).start()
-    network_data_logger = DataLogger(lambda: psutil.net_io_counters(pernic=True)[args.network], max_entries=device.width / 2 - 15).start()
+    sensors_data_logger = DataLogger(
+        collect_sensor_data, max_entries=(device.width / 2) - 10
+    ).start()
+    loadavg_data_logger = DataLogger(
+        psutil.getloadavg, max_entries=device.width - 2
+    ).start()
+    network_data_logger = DataLogger(
+        lambda: psutil.net_io_counters(pernic=True)[args.network],
+        max_entries=device.width / 2 - 15,
+    ).start()
 
     def shutdownHandler(signal, frame):
         loadavg_data_logger.stop()
@@ -122,22 +146,46 @@ def hw_monitor(device, args):
     signal.signal(signal.SIGINT, shutdownHandler)
     signal.signal(signal.SIGTERM, shutdownHandler)
 
-    virtual = viewport(device, width=device.width, height=1024, mode='RGBA', dither=True)
+    virtual = viewport(
+        device, width=device.width, height=1024, mode="RGBA", dither=True
+    )
     with canvas(virtual) as draw:
         y_offset = render_logo(draw, 0, device.width, args.title)
 
         hotspots = [
             snapshot(device.width, 9, cpu_percent.render, interval=0.5),
-            snapshot(device.width, cpu_barchart.height + 4, cpu_barchart.render, interval=0.5),
+            snapshot(
+                device.width, cpu_barchart.height + 4, cpu_barchart.render, interval=0.5
+            ),
             snapshot(device.width, cpu_stats.height + 11, cpu_stats.render, interval=2),
             snapshot(device.width, uptime.height, uptime.render, interval=10),
             snapshot(device.width, 10, system_load.render, interval=1.0),
-            snapshot(device.width, loadavg_chart.height, loadavg_chart.using(loadavg_data_logger), interval=1.0),
+            snapshot(
+                device.width,
+                loadavg_chart.height,
+                loadavg_chart.using(loadavg_data_logger),
+                interval=1.0,
+            ),
             snapshot(device.width, 10, memory.render, interval=5.0),
-            snapshot(device.width, 28, disk.directory('/'), interval=5.0),
-            snapshot(device.width, network.height, network.using(args.network, network_data_logger), interval=2.0),
-            snapshot(device.width, 64, sensors_chart.using(sensors_data_logger, sensors_spec, fan_spec), interval=1.0),
-            snapshot(device.width, 64 * 6, device_list.init('http://192.168.1.254'), interval=30)
+            snapshot(device.width, 28, disk.directory("/"), interval=5.0),
+            snapshot(
+                device.width,
+                network.height,
+                network.using(args.network, network_data_logger),
+                interval=2.0,
+            ),
+            snapshot(
+                device.width,
+                64,
+                sensors_chart.using(sensors_data_logger, sensors_spec, fan_spec),
+                interval=1.0,
+            ),
+            snapshot(
+                device.width,
+                64 * 6,
+                device_list.init("http://192.168.1.254"),
+                interval=30,
+            ),
         ]
 
         for hotspot in hotspots:
@@ -164,13 +212,15 @@ def get_args():
 
 
 def get_device(args):
-    if 'emulator' in args and args.emulator:
+    if "emulator" in args and args.emulator:
         import luma.emulator.device
+
         Device = getattr(luma.emulator.device, args.emulator)
         return Device(**vars(args))
     else:
         from luma.oled.device import ssd1309
         from luma.core.interface.serial import ftdi_spi
+
         return ssd1309(ftdi_spi(), **vars(args))
 
 
@@ -183,5 +233,5 @@ def main():
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
