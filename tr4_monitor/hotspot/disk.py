@@ -13,7 +13,7 @@ def directory(dir):
 
     def render(draw, width, height):
         usage = psutil.disk_usage(dir)
-        draw.text((0, 0), f'Disk', fill='white', font=default)
+        draw.text((0, 0), 'Disk', fill='white', font=default)
         right_text(draw, width, 0, text=f'{naturalsize(usage.used, gnu=True)}B / {usage.percent}%', font=default)
 
     return render
