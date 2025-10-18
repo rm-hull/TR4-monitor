@@ -20,8 +20,7 @@ import math
 nice_intervals = [1.0, 2.0, 2.5, 3.0, 5.0, 10.0]
 int_intervals = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0]
 int_12_intervals = [1.0, 2.0, 3.0, 4.0, 6.0, 12.0]
-int_60_intervals = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 10.0,
-                    12.0, 15.0, 20.0, 30.0]
+int_60_intervals = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 10.0, 12.0, 15.0, 20.0, 30.0]
 
 
 def nice_ceil(x, intervals=nice_intervals, base=10.0):
@@ -32,7 +31,7 @@ def nice_ceil(x, intervals=nice_intervals, base=10.0):
     z = base ** math.floor(math.log(x, base))
     for i in range(len(intervals) - 1):
         result = intervals[i] * z
-        if x <= result: 
+        if x <= result:
             return result
     return intervals[-1] * z
 
@@ -62,8 +61,7 @@ def nice_round(x, intervals=nice_intervals, base=10.0):
     return intervals[-1] * z
 
 
-def nice_ticks(lo, hi, ticks=5, inside=False,
-               intervals=nice_intervals, base=10.0):
+def nice_ticks(lo, hi, ticks=5, inside=False, intervals=nice_intervals, base=10.0):
     """
     Find 'nice' places to put *ticks* tick marks for numeric data
     spanning from *lo* to *hi*.  If *inside* is ``True``, then the
@@ -79,8 +77,7 @@ def nice_ticks(lo, hi, ticks=5, inside=False,
     """
 
     if lo > hi:
-        value_error = ValueError(
-            "Low value greater than high value: %r, %r" % (lo, hi))
+        value_error = ValueError("Low value greater than high value: %r, %r" % (lo, hi))
         raise value_error
 
     delta_x = hi - lo

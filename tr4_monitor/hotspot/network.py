@@ -3,8 +3,6 @@
 # See LICENSE.rst for details.
 
 import math
-from datetime import datetime
-import psutil
 import miniupnpc
 from itertools import tee
 
@@ -24,7 +22,7 @@ def arrow(draw, xy, fill, direction, size=8):
 
     x, y = xy
 
-    if direction == 'up':
+    if direction == "up":
         shape = [
             (x + size_12, y),
             (x + size, y + size_12),
@@ -32,7 +30,7 @@ def arrow(draw, xy, fill, direction, size=8):
             (x + size_34, y + size),
             (x + size_14, y + size),
             (x + size_14, y + size_12),
-            (x, y + size_12)
+            (x, y + size_12),
         ]
     else:
         shape = [
@@ -42,7 +40,7 @@ def arrow(draw, xy, fill, direction, size=8):
             (x + size_34, y),
             (x + size_14, y),
             (x + size_14, y + size_12),
-            (x, y + size_12)
+            (x, y + size_12),
         ]
 
     draw.polygon(shape, fill=fill)
@@ -64,9 +62,13 @@ def chart(draw, xy, height, width, data):
         for index, value in enumerate(reversed(data)):
             x_offset = x + width - index
             y_value = math.floor(height * value / max_value)
-            draw.line([x_offset, y + height, x_offset, y + height - y_value], fill='grey', width=1)
+            draw.line(
+                [x_offset, y + height, x_offset, y + height - y_value],
+                fill="grey",
+                width=1,
+            )
 
-    draw.rectangle([x, y, x + width, y + height], outline='white', width=1)
+    draw.rectangle([x, y, x + width, y + height], outline="white", width=1)
 
 
 def using(iface, datalogger):
@@ -76,7 +78,7 @@ def using(iface, datalogger):
     try:
         u.selectigd()
         ext_ip_addr = u.externalipaddress()
-    except:
+    except Exception:
         ext_ip_addr = None
 
     local_ip_addr = u.lanaddr
@@ -85,12 +87,12 @@ def using(iface, datalogger):
         global count
 
         snapshot = list(datalogger.entries)
-        stat = snapshot[-1]['value']
-        last_invoked = snapshot[-1]['timestamp']
+        stat = snapshot[-1]["value"]
+        last_invoked = snapshot[-1]["timestamp"]
 
         if len(snapshot) > 1:
-            prev_stat = snapshot[-2]['value']
-            prev_invoked = snapshot[-2]['timestamp']
+            prev_stat = snapshot[-2]["value"]
+            prev_invoked = snapshot[-2]["timestamp"]
             elapsed = (last_invoked - prev_invoked).total_seconds()
             upload_rate = (stat.bytes_sent - prev_stat.bytes_sent) / elapsed
             download_rate = (stat.bytes_recv - prev_stat.bytes_recv) / elapsed
@@ -100,25 +102,65 @@ def using(iface, datalogger):
 
         ip_addr = ext_ip_addr if ext_ip_addr and count % 10 < 5 else local_ip_addr
 
-        draw.text((0, 0), f'Net: {iface}', fill="white", font=default)
+        draw.text((0, 0), f"Net: {iface}", fill="white", font=default)
         right_text(draw, width, 0, text=ip_addr, fill="white", font=default)
 
-        draw.text((5, 10), f'Up:', fill='white', font=default)
-        right_text(draw, width - 44, 10, text=f'{naturalsize(upload_rate)}B/s', fill='white', font=default)
-        right_text(draw, width, 10, text=f'{naturalsize(stat.bytes_sent)}B', fill='white', font=default)
+        draw.text((5, 10), "Up:", fill="white", font=default)
+        right_text(
+            draw,
+            width - 44,
+            10,
+            text=f"{naturalsize(upload_rate)}B/s",
+            fill="white",
+            font=default,
+        )
+        right_text(
+            draw,
+            width,
+            10,
+            text=f"{naturalsize(stat.bytes_sent)}B",
+            fill="white",
+            font=default,
+        )
 
-        draw.text((0, 20), f' Down:', fill='white', font=default)
-        right_text(draw, width - 44, 20, text=f'{naturalsize(download_rate)}B/s', fill='white', font=default)
-        right_text(draw, width, 20, text=f'{naturalsize(stat.bytes_recv)}B', fill='white', font=default)
+        draw.text((0, 20), " Down:", fill="white", font=default)
+        right_text(
+            draw,
+            width - 44,
+            20,
+            text=f"{naturalsize(download_rate)}B/s",
+            fill="white",
+            font=default,
+        )
+        right_text(
+            draw,
+            width,
+            20,
+            text=f"{naturalsize(stat.bytes_recv)}B",
+            fill="white",
+            font=default,
+        )
 
         pairs = list(window(snapshot, size=2))
-        bytes_sent = [second['value'].bytes_sent - first['value'].bytes_sent for first, second in pairs]
-        bytes_recv = [second['value'].bytes_recv - first['value'].bytes_recv for first, second in pairs]
+        bytes_sent = [
+            second["value"].bytes_sent - first["value"].bytes_sent
+            for first, second in pairs
+        ]
+        bytes_recv = [
+            second["value"].bytes_recv - first["value"].bytes_recv
+            for first, second in pairs
+        ]
 
-        arrow(draw, (5, 33), fill='white', direction='up', size=6)
+        arrow(draw, (5, 33), fill="white", direction="up", size=6)
         chart(draw, (13, 30), height=12, width=datalogger.max_entries, data=bytes_sent)
-        arrow(draw, (width / 2 + 5, 33), fill='white', direction='down', size=6)
-        chart(draw, ((width / 2) + 13, 30), height=12, width=datalogger.max_entries, data=bytes_recv)
+        arrow(draw, (width / 2 + 5, 33), fill="white", direction="down", size=6)
+        chart(
+            draw,
+            ((width / 2) + 13, 30),
+            height=12,
+            width=datalogger.max_entries,
+            data=bytes_recv,
+        )
 
         count += 1
 
