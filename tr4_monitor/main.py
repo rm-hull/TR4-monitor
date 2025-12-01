@@ -20,7 +20,7 @@ from common import center_text
 from hotspot import cpu_percent, cpu_barchart, cpu_stats
 from hotspot import uptime, system_load, loadavg_chart
 from hotspot import network, memory, disk, sensors_chart
-from hotspot import device_list
+# from hotspot import device_list
 from data_logger import DataLogger
 
 
