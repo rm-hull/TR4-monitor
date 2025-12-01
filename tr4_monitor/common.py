@@ -4,10 +4,10 @@
 
 
 def center_text(draw, width, y, text, fill="white", font=None):
-    x = (width - draw.textsize(text, font=font)[0]) / 2
+    x = (width - draw.textlength(text, font=font)) / 2
     draw.text((x, y), text=text, font=font, fill=fill)
 
 
 def right_text(draw, width, y, text, fill="white", font=None):
-    x = width - draw.textsize(text, font=font)[0]
+    x = width - draw.textlength(text, font=font)
     draw.text((x, y), text=text, font=font, fill=fill)

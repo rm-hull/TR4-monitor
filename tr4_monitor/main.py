@@ -20,7 +20,7 @@ from common import center_text
 from hotspot import cpu_percent, cpu_barchart, cpu_stats
 from hotspot import uptime, system_load, loadavg_chart
 from hotspot import network, memory, disk, sensors_chart
-from hotspot import device_list
+# from hotspot import device_list
 from data_logger import DataLogger
 
 
@@ -180,12 +180,12 @@ def hw_monitor(device, args):
                 sensors_chart.using(sensors_data_logger, sensors_spec, fan_spec),
                 interval=1.0,
             ),
-            snapshot(
-                device.width,
-                64 * 6,
-                device_list.init("http://192.168.1.254"),
-                interval=30,
-            ),
+            # snapshot(
+            #     device.width,
+            #     64 * 6,
+            #     device_list.init("http://192.168.1.254"),
+            #     interval=30,
+            # ),
         ]
 
         for hotspot in hotspots:
