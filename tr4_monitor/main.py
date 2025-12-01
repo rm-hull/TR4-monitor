@@ -180,12 +180,12 @@ def hw_monitor(device, args):
                 sensors_chart.using(sensors_data_logger, sensors_spec, fan_spec),
                 interval=1.0,
             ),
-            snapshot(
-                device.width,
-                64 * 6,
-                device_list.init("http://192.168.1.254"),
-                interval=30,
-            ),
+            # snapshot(
+            #     device.width,
+            #     64 * 6,
+            #     device_list.init("http://192.168.1.254"),
+            #     interval=30,
+            # ),
         ]
 
         for hotspot in hotspots:
